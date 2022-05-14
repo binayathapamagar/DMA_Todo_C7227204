@@ -41,8 +41,8 @@ public class TodosListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
        View view =  inflater.inflate(R.layout.fragment_todos_list, container, false);
-       fabButton = view.findViewById(R.id.fab_button);
-       recyclerView = view.findViewById(R.id.todos_list);
+       fabButton = view.findViewById(R.id.add_btn);
+       recyclerView = view.findViewById(R.id.recyclerview);
        return view;
     }
 
@@ -56,7 +56,7 @@ public class TodosListFragment extends Fragment {
             public void onClick(View v) {
                 AddTodoFragment fragment = AddTodoFragment.newInstance();
                 FragmentManager fm  = getParentFragmentManager();
-                fm.beginTransaction().replace(R.id.fragment_container, fragment).addToBackStack(null).commit();
+                fm.beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
 
             }
         });

@@ -10,8 +10,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,6 +17,6 @@ public class MainActivity extends AppCompatActivity {
 
         TodosListFragment fragment = new TodosListFragment();
         FragmentManager fm = getSupportFragmentManager();
-        fm.beginTransaction().add(R.id.fragment_container, fragment).commit();
+        fm.beginTransaction().add(R.id.container, fragment).commit();
     }
 }
