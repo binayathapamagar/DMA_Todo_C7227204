@@ -1,51 +1,133 @@
 package com.example.todoapp;
 
+import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.todoapp.database.Todo;
 
 import java.util.List;
 import java.util.zip.Inflater;
 
-public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder>{
+public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.TodoViewHolder> {
 
-    List<Todo> data;
+    private TaskCallBack callBack;
+    private Context mContext;
+    private List<Todo> mTaskEntries;
 
-    public TodoAdapter(List<Todo> todos) {
-        data = todos;
+    class TodoViewHolder extends RecyclerView.ViewHolder {
+        private final TextView todoItemView;
+        private final TextView todoDescView;
+        private TextView priorityView;
+        private ImageView update_image;
+        private TextView todoDateView;
+
+
+        private TodoViewHolder(View itemView) {
+            super(itemView);
+            todoItemView = itemView.findViewById(R.id.title_tv);
+            todoDescView = itemView.findViewById(R.id.description_tv);
+            priorityView = itemView.findViewById(R.id.priorityTextView);
+            todoDateView = itemView.findViewById(R.id.date_tv);
+
+            update_image = itemView.findViewById(R.id.update_img);
+
+            update_image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    callBack.onUpdate(mTodos.get(position));
+                }
+            });
+
+        }
+
+    }
+
+    public List<Todo> mTodos; // Cached copy of todos
+
+    TodoAdapter(Context context, TaskCallBack callBack) {
+        mContext = context;
+        this.callBack = callBack;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.list_item, parent, false);
-        return new ViewHolder(view);
+    public TodoViewHolder  onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(mContext).inflate(R.layout.list_item, parent, false);
+        return new TodoViewHolder(itemView);
     }
 
+    // --------------------------------------------- Display Tasks, Description, Priority and Date ------------------------------------------
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Todo todo = data.get(position);
-        holder.titleTextView.setText(todo.getTitle());
+    public void onBindViewHolder(@NonNull TodoViewHolder holder, int position) {
 
+        //if (mTodos != null) {
+        Todo current = mTodos.get(position);
+        //String todoDate = dateFormat.format(current.getCreatedDate().toString());
+        int priority = current.getPriority();
+
+        holder.todoItemView.setText(current.getTitle());
+        holder.todoDescView.setText(current.getDescription());
+        holder.todoDateView.setText(current.getDate());
+
+
+        String priorityString = "" + priority; // converts int to String
+        holder.priorityView.setText(priorityString);
+
+        GradientDrawable priorityCircle = (GradientDrawable) holder.priorityView.getBackground();
+        // Get the appropriate background color based on the priority
+        int priorityColor = getPriorityColor(priority);
+        priorityCircle.setColor(priorityColor);
+
+
+    }
+    // Method to get color for priority
+    private int getPriorityColor(int priority) {
+        int priorityColor = 0;
+
+        switch (priority) {
+            case 1:
+                priorityColor = ContextCompat.getColor(mContext, R.color.materialRed);
+                break;
+            case 2:
+                priorityColor = ContextCompat.getColor(mContext, R.color.materialOrange);
+                break;
+            case 3:
+                priorityColor = ContextCompat.getColor(mContext, R.color.materialYellow);
+                break;
+            default:
+                break;
+        }
+        return priorityColor;
+    }
+
+
+    void setTodos(List<Todo> todos){
+        mTodos = todos;
+        notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return data.size();
+        if (mTodos != null)
+            return mTodos.size();
+        else return 0;
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView titleTextView;
+    //Interface for update
+    public interface TaskCallBack {
+        void onItemDeleted(int id);
 
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            titleTextView = itemView.findViewById(R.id.title_tv);
-        }
+        void onUpdate(Todo todo);
     }
+
 }
