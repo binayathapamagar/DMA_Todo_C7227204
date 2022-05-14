@@ -4,8 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/ic_baseline_add_circle_24.xml" value="0.12129629629629629" />
+        <entry key="app/src/main/res/drawable/ic_baseline_update_24.xml" value="0.1785" />
+        <entry key="app/src/main/res/drawable/priority_circle.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.14175724637681159" />
         <entry key="app/src/main/res/layout/fragment_add_todo.xml" value="0.23097826086956522" />
-        <entry key="app/src/main/res/layout/fragment_todos_list.xml" value="0.1609375" />
+        <entry key="app/src/main/res/layout/fragment_todos_list.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/list_item.xml" value="0.14175724637681159" />
       </map>
     </option>
   </component>
