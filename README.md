@@ -11,5 +11,5 @@ You can delete all the taks by clicking on the top right trash icon on the tool 
 #### ***8 Share your Todo list ***.
 You can share your todo list by clicking on the share icon on the tool bar beside the trash icon and use gmail.
 
-ToDo app demo:
+#### *** Todo app demo: ***
 <img src ="gif/ToDo.gif" width="400" />
