@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TodoApp</string>
+    <string name="app_name">TODOs</string>
     <string name="no_todo">No Todo</string>
     <string name="no_desc">No Desc</string>
 
