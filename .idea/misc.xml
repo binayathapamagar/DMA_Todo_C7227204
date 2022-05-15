@@ -5,6 +5,7 @@
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_baseline_add_circle_24.xml" value="0.12129629629629629" />
+        <entry key="app/src/main/res/drawable/ic_baseline_delete_sweep_24.xml" value="0.181" />
         <entry key="app/src/main/res/drawable/ic_baseline_update_24.xml" value="0.1785" />
         <entry key="app/src/main/res/drawable/priority_circle.xml" value="0.1" />
         <entry key="app/src/main/res/font/resource.xml" value="0.22291666666666668" />
@@ -16,6 +17,7 @@
         <entry key="app/src/main/res/layout/fragment_todos_list.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_update.xml" value="0.14583333333333334" />
         <entry key="app/src/main/res/layout/list_item.xml" value="0.14175724637681159" />
+        <entry key="app/src/main/res/menu/first_menu.xml" value="0.19427083333333334" />
       </map>
     </option>
   </component>

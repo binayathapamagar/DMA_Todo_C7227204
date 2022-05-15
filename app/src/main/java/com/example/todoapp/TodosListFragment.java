@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,32 +61,91 @@ public class TodosListFragment extends Fragment{
     private Button submitButton;
     private TodoRepository repository;
     private TextView titleView;
+    private ImageView emptyTodosImage;
 
     private List<Todo> mTaskEntries;
 
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.first_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.delete_all:  {
+                AlertDialog alertDialog = new AlertDialog.Builder(getContext())
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setTitle("Delete?")
+                        .setMessage("Are you sure you want to delete all of the Todo Tasks?.")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                repository.deleteAll();
+                                Toast.makeText(getContext(), "Deleted All", Toast.LENGTH_SHORT).show();
+                                getActivity().getSupportFragmentManager().beginTransaction()
+                                        .replace(R.id.container, TodosListFragment.newInstance())
+                                        .commitNow();
+                            }
+                        })
+                        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                adapter.notifyDataSetChanged();
+                            }
+                        })
+                        .show();
+                return true;
+
+            }
+            case R.id.share: {
+                String txt = "Git, Assignment, To-do App";
+                String mimeType = "text/plain";
+                ShareCompat.IntentBuilder
+                        .from(getActivity())
+                        .setType(mimeType)
+                        .setChooserTitle("Share this text with: ")
+                        .setText(txt)
+                        .startChooser();
+
+            }
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-
         View view;
         view = inflater.inflate(R.layout.fragment_todos_list, container, false);
         RecyclerView recyclerView = view.findViewById(R.id.recyclerview);
         titleView = view.findViewById(R.id.title_tv);
         this.adapter = new TodoAdapter(getContext(), new TodoAdapter.TaskCallBack() {
             @Override
-            public void onItemDeleted(int id) {
-
-            }
+            public void onItemDeleted(int id) {}
 
             @Override
             public void onUpdate(Todo todo) {
                 ((MainActivity)getActivity()).moveToUpdate(todo);
             }
         });
+        setHasOptionsMenu(true);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        emptyTodosImage = view.findViewById(R.id.emptytodosimage);
+        
+        //Showing empty image if todos are empty
+//        if (adapter.getItemCount() == 0) {
+//            emptyTodosImage.setVisibility(view.VISIBLE);
+//            recyclerView.setVisibility(view.GONE);
+//        } else {
+//            emptyTodosImage.setVisibility(view.GONE);
+//            recyclerView.setVisibility(view.VISIBLE);
+//        }
         fab = view.findViewById(R.id.add_btn);
 
         //Divides a line between each View
