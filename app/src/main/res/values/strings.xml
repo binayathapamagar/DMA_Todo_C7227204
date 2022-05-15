@@ -33,7 +33,7 @@
     <string name="highest_to_lowest">Highest to Lowest</string>
     <string name="tasks">Tasks</string>
     <string name="toast_fab_message">Add Task</string>
-    <string name="update_task">Update Task</string>
+    <string name="update_task">Update Todo Task</string>
     <string name="add_task">Add a new Todo</string>
     <string name="add_task_button">Add</string>
 </resources>
